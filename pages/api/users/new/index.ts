@@ -7,7 +7,7 @@ export default async function POST(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const { method } = req;
+
   const { userName, firstName, lastName, password, email, birthDate } = req.body;
   await dbConnect();
 

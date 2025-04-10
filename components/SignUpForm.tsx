@@ -55,12 +55,13 @@ const SignUpForm = ({ formId, signUpForm }) => {
         body: JSON.stringify(form),
       });
 
+      const json = await res.json()
       if (!res.ok) {
-        console.log(res)
-        setErrors({ ...errors, res })
+        setMessage("failed to add user");
+        setErrors({ ...errors, json })
       }
 
-      router.push("/");
+      // router.push("/");
     } catch (err) {
       setMessage("failed to add user");
     }
@@ -182,7 +183,7 @@ const SignUpForm = ({ formId, signUpForm }) => {
       <div>
         {
           Object.values(errors).map(err => {
-            return Object.values(err).map(e => <li>{e}</li>)
+            return Object.values(err).map((e: Any) => <li>{e}</li>)
           })
         }
       </div>
