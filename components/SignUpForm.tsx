@@ -82,11 +82,21 @@ const SignUpForm = ({ formId, signUpForm }) => {
 
   const formValidate = () => {
     let err: Error = {};
-    if (!form.userName) err.userName = "Username is required";
-    if (!form.firstName) err.firstName = "First name is required";
-    if (!form.lastName) err.lastName = "Last name is required";
-    if (!form.email) err.email = "Email is required";
-    if (!form.password) err.password = "Password is required";
+    if (!form.userName) {
+      err.userName = "Username is required";
+    }
+    if (!form.firstName) {
+      err.firstName = "First name is required";
+    }
+    if (!form.lastName) {
+      err.lastName = "Last name is required";
+    }
+    if (!form.email) {
+      err.email = "Email is required";
+    }
+    if (!form.password) {
+      err.password = "Password is required";
+    }
     if (!form.confirmPassword || form.confirmPassword !== form.password) err.confirmPassword = "Passwords do not match";
     if (!form.dob) err.dob = "Birthday is required";
     return err;
@@ -100,6 +110,7 @@ const SignUpForm = ({ formId, signUpForm }) => {
       postData(form);
     } else {
       setErrors({ errs });
+      
     }
   };
 
@@ -111,7 +122,7 @@ const SignUpForm = ({ formId, signUpForm }) => {
           type="text"
           maxLength={20}
           name="userName"
-          value={form.username}
+          value={form.userName}
           onChange={handleChange}
           required
         />
