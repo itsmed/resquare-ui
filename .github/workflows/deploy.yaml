@@ -1,0 +1,38 @@
+---
+
+name: Manually deploy to dev or prod
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Select the environment to deploy to'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+          - dev
+          - prod
+
+jobs:
+  deploy:
+    name: Deploy to ${{ github.event.inputs.environment }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0  # Get full history so we can push
+
+      - name: Force push main to ${{ github.event.inputs.environment }}
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+
+          # Make sure remote refs are up to date
+          git fetch origin
+
+          # Force push main to the target environment
+          git push origin main:${{ github.event.inputs.environment }} --force
