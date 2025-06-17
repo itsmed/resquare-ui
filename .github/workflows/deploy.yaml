@@ -18,7 +18,9 @@ jobs:
   deploy:
     name: Deploy to ${{ github.event.inputs.environment }}
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: 'read'
+      id-token: 'write'
     steps:
       - name: Checkout main branch
         uses: actions/checkout@v4
@@ -36,3 +38,12 @@ jobs:
 
           # Force push main to the target environment
           git push origin main:${{ github.event.inputs.environment }} --force
+
+      - name: Checkout the ${{ github.event.inputs.environment }} branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.environment }}
+          fetch-depth: 0  # Get full history so we can push
+        # run: |
+        #   git fetch origin
+        #   git checkout ${{ github.event.inputs.environment }}
